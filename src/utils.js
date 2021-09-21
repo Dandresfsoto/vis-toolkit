@@ -1,6 +1,7 @@
   // LIST OF PRIVATE UTILS FUNCTIONS
 
   // Create SVG groups for items marks
+
   utils.items_group = function(d, i) {
 
     d3.select(this).classed("highlighted", function(d, i) { return d.__highlighted; })
@@ -574,6 +575,7 @@
           mark.enter().append('line')
               .classed('connect__line', true)
               .classed("items_" + mark_id, true)
+              .classed(`connected_${d.source.id}_${d.target.id}`, true)
               .attr("x1", function(d) { return vars.x_scale[0]["func"](d.source.x); })
               .attr("y1", function(d) { return vars.y_scale[0]["func"](d.source.y); })
               .attr("x2", function(d) { return vars.x_scale[0]["func"](d.target.x); })
@@ -597,7 +599,8 @@
               .classed("highlighted", function(d, i) { return d.__highlighted; })
               .classed("highlighted__adjacent", function(d, i) { return d.__highlighted__adjacent; })
               .classed("selected", function(d, i) { return d.__selected; })
-              .classed("selected__adjacent", function(d, i) { return d.__selected__adjacent; });
+              .classed("selected__adjacent", function(d, i) { return d.__selected__adjacent; })
+              .classed("selected__secondary", function(d, i) { return d.__selected__secondary; });
 
           break;
 
@@ -1087,6 +1090,7 @@
               .classed("highlighted__adjacent", function(d, i) { return d.__highlighted__adjacent; })
               .classed("selected", function(d, i) { return d.__selected; })
               .classed("selected__adjacent", function(d, i) { return d.__selected__adjacent; })
+              .classed("selected__secondary", function(d, i) { return d.__selected__secondary; })
               .style("fill", params_fill)
               .style("fill-opacity", params_fill_opacity)
               .style("stroke-opacity", params_stroke_opacity);
@@ -1164,7 +1168,10 @@
 
       vars.svg.transition()
               .duration(vars.duration)
-              .attr("transform", "translate(" + vars.margin.left + "," + vars.margin.top + ")rotate(" + vars.rotate + ")");
+              .attr("transform", "translate(" + vars.margin.left + "," + vars.margin.top + ")rotate(" + vars.rotate + ")")
+              .each("end", function () {
+                vars.evt.call("highlightOn", nodes);
+              });
       return;
     }
 
@@ -1209,7 +1216,13 @@
     vars.svg.transition()
         .duration(1750)
         .style("stroke-width", 1.5 / vars.scale + "px")
-        .attr("transform", "translate(" + vars.translate + ")scale(" + vars.scale + ")");
+        .attr("transform", "translate(" + vars.translate + ")scale(" + vars.scale + ")")
+        .each("start", function (){
+          d3.selectAll(".tooltip_network").classed("d-none", true);
+        })
+        .each("end", function () {
+          vars.evt.call("highlightOn", nodes);
+        });
 
     // If we want to re-scale the various elements
     // vars.svg.selectAll("circle").style("stroke-width", (1.5 / vars.scale) + "px")

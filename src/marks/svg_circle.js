@@ -35,6 +35,7 @@ vars.default_marks["circle"] = function(scope) {
         .classed("highlighted__adjacent", function(d, i) { return d.__highlighted__adjacent; })
         .classed("selected", function(d, i) { return d.__selected; })
         .classed("selected__adjacent", function(d, i) { return d.__selected__adjacent; })
+        .classed("selected__secondary", function(d, i) { return d.__selected__secondary; })
         .transition().duration(vars.duration)
         .attr("transform", "translate(" +  mark_params.translate + ")rotate(" +  mark_params.rotate + ")")
 

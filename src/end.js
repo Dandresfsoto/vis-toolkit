@@ -174,6 +174,7 @@ vistk.utils.init_item = function(d) {
   d.__aggregated = false;
   d.__selected = false;
   d.__selected__adjacent = false;
+  d.__selected__secondary = false;
   d.__highlighted = false;
   d.__highlighted__adjacent = false;
   d.__missing = false;
