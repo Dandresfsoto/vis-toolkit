@@ -39,6 +39,7 @@ vars.default_marks['rect'] = function(scope) {
         .classed("highlighted__adjacent", function(d, i) { return d.__highlighted__adjacent; })
         .classed("selected", function(d, i) { return d.__selected; })
         .classed("selected__adjacent", function(d, i) { return d.__selected__adjacent; })
+        .classed("selected__secondary", function(d, i) { return d.__selected__secondary; })
         .attr("x", mark_params.x)
         .attr("y", mark_params.y)
         .attr("height", mark_params.height)

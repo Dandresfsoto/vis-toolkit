@@ -198,6 +198,11 @@ vars.default_params['productspace'] = function(scope) {
           f.__redraw = true;
         }
 
+        if(f.__selected__secondary) {
+          f.__selected__secondary = false;
+          f.__redraw = true;
+        }
+
       });
 
       vars.links.forEach(function(f, k) {
@@ -208,6 +213,11 @@ vars.default_params['productspace'] = function(scope) {
 
         if(f.__selected__adjacent) {
           f.__selected__adjacent = false;
+          f.__redraw = true;
+        }
+
+        if(f.__selected__secondary) {
+          f.__selected__secondary = false;
           f.__redraw = true;
         }
 
@@ -239,13 +249,46 @@ vars.default_params['productspace'] = function(scope) {
 
       });
 
+      var adjacent_select = adjacent_links.map(item => {
+        if(item.target.id !== d.id){
+          return item.target;
+        }
+        else{
+          return item.source;
+        }
+      }).map(item => {
+        var adjacent_links_secondary = utils.find_adjacent_links(item, vars.links);
+
+        adjacent_links_secondary.forEach(function(e) {
+          if(e.__selected !== true){
+            e.__selected__secondary = true;
+            e.__redraw = true;
+
+            vars.new_data.forEach(function(f, k) {
+
+          if(f[vars.var_id] === e.target[vars.var_id] || f[vars.var_id] === e.source[vars.var_id]) {
+
+              // Update nodes
+              f.__selected__secondary = true;
+              f.__redraw = true;
+            }
+
+          });
+
+          }
+        })
+
+      })
+
       d3.select(vars.container).selectAll(".connect__line")
         .classed("selected", function(d, i) { return d.__selected; })
         .classed("selected__adjacent", function(d, i) { return d.__selected__adjacent; })
+        .classed("selected__secondary", function(d, i) { return d.__selected__secondary; })
 
       d3.select(vars.container).selectAll("circle")
         .classed("selected", function(d, i) { return d.__selected; })
         .classed("selected__adjacent", function(d, i) { return d.__selected__adjacent; })
+        .classed("selected__secondary", function(d, i) { return d.__selected__secondary; })
 
     });
   }
