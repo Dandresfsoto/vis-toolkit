@@ -249,14 +249,16 @@ vars.default_params['productspace'] = function(scope) {
 
       });
 
-      var adjacent_select = adjacent_links.map(item => {
+      var adjacent_select = adjacent_links.forEach(function(item){
         if(item.target.id !== d.id){
           return item.target;
         }
         else{
           return item.source;
         }
-      }).map(item => {
+      })
+
+      var adjacent_select_2 = adjacent_select.forEach(function(item){
         var adjacent_links_secondary = utils.find_adjacent_links(item, vars.links);
 
         adjacent_links_secondary.forEach(function(e) {
