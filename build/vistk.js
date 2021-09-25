@@ -4268,16 +4268,17 @@ vars.default_params['productspace'] = function(scope) {
       });
 
       var adjacent_select = adjacent_links.forEach(function(item){
+
+        var node
+
         if(item.target.id !== d.id){
-          return item.target;
+          node = item.target;
         }
         else{
-          return item.source;
+          node = item.source;
         }
-      })
 
-      var adjacent_select_2 = adjacent_select.forEach(function(item){
-        var adjacent_links_secondary = utils.find_adjacent_links(item, vars.links);
+        var adjacent_links_secondary = utils.find_adjacent_links(node, vars.links);
 
         adjacent_links_secondary.forEach(function(e) {
           if(e.__selected !== true){
