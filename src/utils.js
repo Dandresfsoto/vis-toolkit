@@ -575,7 +575,7 @@
           mark.enter().append('line')
               .classed('connect__line', true)
               .classed("items_" + mark_id, true)
-              .classed(`connected_${d.source.id}_${d.target.id}`, true)
+              .classed("connected_" + d.source.id + "_" + d.target.id, true)
               .attr("x1", function(d) { return vars.x_scale[0]["func"](d.source.x); })
               .attr("y1", function(d) { return vars.y_scale[0]["func"](d.source.y); })
               .attr("x2", function(d) { return vars.x_scale[0]["func"](d.target.x); })
