@@ -811,6 +811,18 @@
                  d3.event.stopPropagation();
               });
 
+          mark
+              .classed("highlighted", function(d, i) { return d.__highlighted; })
+              .classed("selected", function(d, i) { return d.__selected; })
+              //.attr("x1", function(d) { return params_offset_x; })
+              //.attr("y1", function(d) { return -t[1] - vars.margin.top + params_offset_top; })
+              //.attr("x2", function(d) { return params_offset_x; })
+              //.attr("y2", function(d) { return vars.y_scale[0]["func"].range()[1]; })
+              .attr("y2", params_offset_top)
+              .attr("y1", function(d) { return vars.height - vars.margin.top - vars.margin.bottom - t[1]; });
+
+          break;
+
         case "line_coord":
 
           var mark = d3.select(that).selectAll(".mark__line_coord.items_" + mark_id).data([d]);
